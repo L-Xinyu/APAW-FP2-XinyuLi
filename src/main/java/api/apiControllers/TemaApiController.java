@@ -18,6 +18,11 @@ public class TemaApiController {
         return this.temaBusinessController.create(temaDto);
     }
 
+    public void update(String id, TemaDto temaDto) {
+        this.validate(temaDto, "temaDto");
+        this.validate(temaDto.getName(), "TemaDto Name");
+        this.temaBusinessController.update(id, temaDto);
+    }
 
     private void validate(Object property,String message) {
         if (property == null) {

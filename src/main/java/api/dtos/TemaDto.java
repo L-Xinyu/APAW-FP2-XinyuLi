@@ -9,6 +9,8 @@ public class TemaDto {
         this.name =name;
     }
 
+    public TemaDto(String id){ this(id,null);}
+
     public String getId() {
         return id;
     }
@@ -21,4 +23,7 @@ public class TemaDto {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 }
