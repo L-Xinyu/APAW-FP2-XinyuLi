@@ -36,6 +36,11 @@ public class ArticuloApiController {
         this.articuloBusinessController.delete(id);
     }
 
+    public void updateCategory(String articuloId, Category category) {
+        this.validate(category, "category");
+        this.articuloBusinessController.updateCategory(articuloId, category);
+    }
+
     private void validate(Object property, String message) {
         if (property == null) {
             throw new ArgumentNotValidException(message + " is missing");

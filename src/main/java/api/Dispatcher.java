@@ -31,8 +31,8 @@ public class Dispatcher {
         String ERROR_MESSAGE = "{'error':'%S'}";
         try {
             switch (request.getMethod()) {
-                case DELETE:
-                    this.doDelete(request);
+                case PATCH:
+                    this.doPatch(request);
                     break;
                 default: // Unexpected
                     throw new RequestInvalidException("method error: " + request.getMethod());
@@ -50,9 +50,9 @@ public class Dispatcher {
         }
     }
 
-    private void doDelete(HttpRequest request) {
-        if (request.isEqualsPath(ArticuloApiController.ARTICULOS + ArticuloApiController.ID_ID)) {
-            this.articuloApiController.delete(request.getPath(1));
+    private void doPatch(HttpRequest request) {
+        if (request.isEqualsPath(ArticuloApiController.ARTICULOS + ArticuloApiController.ID_ID + ArticuloApiController.CATEGORY)) {
+            this.articuloApiController.updateCategory(request.getPath(1), (Category) request.getBody());
         } else {
             throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
         }
