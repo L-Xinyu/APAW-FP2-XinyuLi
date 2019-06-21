@@ -19,7 +19,7 @@ public class ArticuloBusinessController {
             tema = DaoFactory.getFactory().getTemaDao().read(articuloCreationDto.getTemaId())
                     .orElseThrow(() -> new NotFoundException("User (" + articuloCreationDto.getTemaId() + ")"));
         }
-        Articulo articulo = Articulo.builder(articuloCreationDto.getName()).tema(tema).category(articuloCreationDto.getCategory()).build();
+        Articulo articulo = Articulo.builder(articuloCreationDto.getName()).tema(tema).build();
         DaoFactory.getFactory().articuloDao().save(articulo);
         return articulo.getId();
     }
@@ -28,6 +28,10 @@ public class ArticuloBusinessController {
         return DaoFactory.getFactory().articuloDao().findAll()
                 .stream().map(ArticuloIdNameDto::new)
                 .collect(Collectors.toList());
+    }
+
+    public void delete(String id) {
+        DaoFactory.getFactory().articuloDao().deleteById(id);
     }
 
     public void updateCategory(String id, Category category) {

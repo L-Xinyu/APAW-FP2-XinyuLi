@@ -39,7 +39,6 @@ public class Articulo {
     public void setTema(Tema tema) { this.tema = tema; }
 
     public List<Escritor> getEscritors() { return escritors; }
-    public void setEscritors(List<Escritor> escritors) { this.escritors = escritors; }
 
     public static class Builder{
         private final Articulo name;
@@ -61,11 +60,6 @@ public class Articulo {
 
         public Builder tema(Tema tema){
             this.articulo.tema = tema;
-            return this;
-        }
-
-        public Builder escritor(Escritor escritor){
-            this.articulo.escritors.add(escritor);
             return this;
         }
 
