@@ -19,7 +19,7 @@ public class ArticuloBusinessController {
             tema = DaoFactory.getFactory().getTemaDao().read(articuloCreationDto.getTemaId())
                     .orElseThrow(() -> new NotFoundException("User (" + articuloCreationDto.getTemaId() + ")"));
         }
-        Articulo articulo = Articulo.builder(articuloCreationDto.getName()).tema(tema).build();
+        Articulo articulo = Articulo.builder(articuloCreationDto.getName()).tema(tema).category(articuloCreationDto.getCategory()).build();
         DaoFactory.getFactory().articuloDao().save(articulo);
         return articulo.getId();
     }
