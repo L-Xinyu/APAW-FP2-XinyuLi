@@ -34,6 +34,9 @@ public class Dispatcher {
                 case POST:
                     this.doPost(request, response);
                     break;
+                case PUT:
+                    this.doPut(request);
+                    break;
                 default: // Unexpected
                     throw new RequestInvalidException("method error: " + request.getMethod());
             }
@@ -62,4 +65,11 @@ public class Dispatcher {
         }
     }
 
+    private void doPut(HttpRequest request) {
+        if (request.isEqualsPath(TemaApiController.TEMAS + TemaApiController.ID_ID)) {
+            this.temaApiController.update(request.getPath(1), (TemaDto) request.getBody());
+        } else {
+            throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
+        }
+    }
 }
