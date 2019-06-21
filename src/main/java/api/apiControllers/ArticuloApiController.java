@@ -32,11 +32,19 @@ public class ArticuloApiController {
         return this.articuloBusinessController.readAll();
     }
 
+
     private void validate(Object property, String message) {
         if (property == null) {
             throw new ArgumentNotValidException(message + " is missing");
         }
     }
 
+    public List<ArticuloIdNameDto> find(String query) {
+        this.validate(query, "query param q");
+        if (!"average".equals(query.split(":>=")[0])) {
+            throw new ArgumentNotValidException("query param q is incorrect, missing 'average:>='");
+        }
+        return this.articuloBusinessController.findByAverageGreaterThanEqual(Double.valueOf(query.split(":>=")[1]));
+    }
 }
 

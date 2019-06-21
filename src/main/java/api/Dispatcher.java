@@ -1,8 +1,13 @@
 package api;
 
 import api.apiControllers.ArticuloApiController;
+import api.apiControllers.ComentarioApiController;
+import api.apiControllers.TemaApiController;
 import api.daos.DaoFactory;
 import api.daos.memory.DaoMemoryFactory;
+import api.dtos.ArticuloCreationDto;
+import api.dtos.TemaDto;
+import api.entities.Category;
 import api.exceptions.ArgumentNotValidException;
 import api.exceptions.NotFoundException;
 import api.exceptions.RequestInvalidException;
@@ -16,14 +21,18 @@ public class Dispatcher {
         DaoFactory.setFactory(new DaoMemoryFactory());
     }
 
+    private TemaApiController temaApiController = new TemaApiController();
+
+    private ComentarioApiController comentarioApiController = new ComentarioApiController();
+
     private ArticuloApiController articuloApiController = new ArticuloApiController();
 
     public void submit(HttpRequest request, HttpResponse response) {
         String ERROR_MESSAGE = "{'error':'%S'}";
         try {
             switch (request.getMethod()) {
-                case GET:
-                    this.doGet(request, response);
+                case POST:
+                    this.doPost(request, response);
                     break;
                 default: // Unexpected
                     throw new RequestInvalidException("method error: " + request.getMethod());
@@ -41,12 +50,16 @@ public class Dispatcher {
         }
     }
 
-    private void doGet(HttpRequest request, HttpResponse response) {
-        if (request.isEqualsPath(ArticuloApiController.ARTICULOS)) {
-            response.setBody(this.articuloApiController.readAll());
+    private void doPost(HttpRequest request, HttpResponse response) {
+        if (request.isEqualsPath(TemaApiController.TEMAS)) {
+            response.setBody(this.temaApiController.create((TemaDto) request.getBody()));
+        } else if (request.isEqualsPath(TemaApiController.TEMAS)) {
+            this.temaApiController.create((TemaDto) request.getBody());
+        } else if (request.isEqualsPath(ArticuloApiController.ARTICULOS)) {
+            response.setBody(this.articuloApiController.create((ArticuloCreationDto) request.getBody()));
         } else {
             throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
         }
     }
-}
 
+}
