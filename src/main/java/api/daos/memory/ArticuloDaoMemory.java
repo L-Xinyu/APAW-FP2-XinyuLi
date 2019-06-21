@@ -11,6 +11,11 @@ public class ArticuloDaoMemory extends GenericDaoMemory<Articulo> implements Art
     private List<Articulo> listaArticulos;
 
     @Override
+    public List<Articulo> getArticuloLista() {
+        return listaArticulos;
+    }
+
+    @Override
     public List<Articulo> findByEscritoresNotEmpty() {
         return this.findAll().stream()
                 .filter(articulo -> !articulo.getEscritors().isEmpty())

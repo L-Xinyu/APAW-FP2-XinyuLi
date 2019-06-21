@@ -32,6 +32,9 @@ public class ArticuloApiController {
         return this.articuloBusinessController.readAll();
     }
 
+    public void delete(String id) {
+        this.articuloBusinessController.delete(id);
+    }
 
     private void validate(Object property, String message) {
         if (property == null) {

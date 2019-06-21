@@ -31,8 +31,8 @@ public class Dispatcher {
         String ERROR_MESSAGE = "{'error':'%S'}";
         try {
             switch (request.getMethod()) {
-                case POST:
-                    this.doPost(request, response);
+                case DELETE:
+                    this.doDelete(request);
                     break;
                 default: // Unexpected
                     throw new RequestInvalidException("method error: " + request.getMethod());
@@ -50,16 +50,11 @@ public class Dispatcher {
         }
     }
 
-    private void doPost(HttpRequest request, HttpResponse response) {
-        if (request.isEqualsPath(TemaApiController.TEMAS)) {
-            response.setBody(this.temaApiController.create((TemaDto) request.getBody()));
-        } else if (request.isEqualsPath(TemaApiController.TEMAS)) {
-            this.temaApiController.create((TemaDto) request.getBody());
-        } else if (request.isEqualsPath(ArticuloApiController.ARTICULOS)) {
-            response.setBody(this.articuloApiController.create((ArticuloCreationDto) request.getBody()));
+    private void doDelete(HttpRequest request) {
+        if (request.isEqualsPath(ArticuloApiController.ARTICULOS + ArticuloApiController.ID_ID)) {
+            this.articuloApiController.delete(request.getPath(1));
         } else {
             throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
         }
     }
-
 }
