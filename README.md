@@ -57,6 +57,11 @@
 - 200 OK 
 - 403 BAD_REQUEST
 ---
+### GET /articulos
+#### Respuesta
+- 200 OK 
+  - `[ {id:String,name:String} ]`
+---
 ### POST /articulos
 #### Parámetros del cuerpo
 - `id`: String (**requerido**)
@@ -66,11 +71,6 @@
   - `id`: String
 - 403 BAD_REQUEST
 - 404 NOT_FOUND
----
-### GET /articulos
-#### Respuesta
-- 200 OK 
-  - `[ {id:String,name:String} ]`
 ---
 ### DELETE /articulos/{id}
 #### Respuesta
