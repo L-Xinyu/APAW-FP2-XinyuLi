@@ -15,11 +15,23 @@ public class Escritor {
         return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public Integer getNumero() {
         return numero;
     }
 
+    public void setNumero(Integer numero) {
+        this.numero = numero;
+    }
+
     public String getDescripcion() {
         return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 }

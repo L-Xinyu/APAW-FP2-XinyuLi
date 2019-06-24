@@ -1,14 +1,12 @@
 package api.daos.memory;
 
-import api.daos.ArticuloDao;
-import api.daos.ComentarioDao;
-import api.daos.DaoFactory;
-import api.daos.TemaDao;
+import api.daos.*;
 
 public class DaoMemoryFactory extends DaoFactory {
     private TemaDao temaDao;
     private ComentarioDao comentarioDao;
     private ArticuloDao articuloDao;
+    private EscritorDao escritorDao;
 
 
     @Override
@@ -33,5 +31,13 @@ public class DaoMemoryFactory extends DaoFactory {
             this.articuloDao = new ArticuloDaoMemory();
         }
         return this.articuloDao;
+    }
+
+    @Override
+    public EscritorDao getEscritorDao() {
+        if(this.escritorDao == null){
+            this.escritorDao = new EscritorDaoMemory();
+        }
+        return this.escritorDao;
     }
 }
