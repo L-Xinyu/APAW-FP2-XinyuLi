@@ -18,4 +18,6 @@ public abstract class DaoFactory {
 
     public abstract ArticuloDao articuloDao();
 
+    public abstract EscritorDao getEscritorDao();
+
 }

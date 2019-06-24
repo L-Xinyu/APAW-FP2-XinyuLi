@@ -1,13 +1,13 @@
-package api.entities;
+package api.dtos;
 
-public class Escritor {
+public class EscritorDto {
     private String id;
     private Integer numero;
     private String descripcion;
 
-    public Escritor(String id,Integer numero,String descripcion){
+    public EscritorDto(String id,Integer numero,String descripcion){
         this.id = id;
-        this.numero = numero;
+        this.numero =numero;
         this.descripcion = descripcion;
     }
 

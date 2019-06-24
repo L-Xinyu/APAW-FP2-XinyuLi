@@ -1,12 +1,10 @@
 package api;
 
 import api.apiControllers.ArticuloApiController;
-import api.apiControllers.ComentarioApiController;
-import api.apiControllers.TemaApiController;
+import api.apiControllers.EscritorApiController;
 import api.daos.DaoFactory;
 import api.daos.memory.DaoMemoryFactory;
-import api.dtos.ArticuloCreationDto;
-import api.dtos.TemaDto;
+import api.dtos.EscritorDto;
 import api.entities.Category;
 import api.exceptions.ArgumentNotValidException;
 import api.exceptions.NotFoundException;
@@ -21,16 +19,17 @@ public class Dispatcher {
         DaoFactory.setFactory(new DaoMemoryFactory());
     }
 
-    private TemaApiController temaApiController = new TemaApiController();
-
-    private ComentarioApiController comentarioApiController = new ComentarioApiController();
-
     private ArticuloApiController articuloApiController = new ArticuloApiController();
+
+    private EscritorApiController escritorApiController = new EscritorApiController();
 
     public void submit(HttpRequest request, HttpResponse response) {
         String ERROR_MESSAGE = "{'error':'%S'}";
         try {
             switch (request.getMethod()) {
+                case POST:
+                    this.doPost(request, response);
+                    break;
                 case PATCH:
                     this.doPatch(request);
                     break;
@@ -50,6 +49,15 @@ public class Dispatcher {
         }
     }
 
+    private void doPost(HttpRequest request, HttpResponse response) {
+        if (request.isEqualsPath(EscritorApiController.Escritores)) {
+            response.setBody(this.escritorApiController.create((EscritorDto) request.getBody()));
+        } else {
+            throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
+        }
+    }
+
+
     private void doPatch(HttpRequest request) {
         if (request.isEqualsPath(ArticuloApiController.ARTICULOS + ArticuloApiController.ID_ID + ArticuloApiController.CATEGORY)) {
             this.articuloApiController.updateCategory(request.getPath(1), (Category) request.getBody());
@@ -57,4 +65,5 @@ public class Dispatcher {
             throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
         }
     }
+
 }
